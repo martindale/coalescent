@@ -4,7 +4,7 @@ Coalescence
 An [Express](http://expressjs.com/)-like framework for rapidly building
 [P2P](http://en.wikipedia.org/wiki/Peer-to-peer) applications with Node.js.
 
-[![Build Status](https://travis-ci.org/gordonwritescode/coalesce.svg)](https://travis-ci.org/gordonwritescode/coalesce)
+[![Build Status](https://travis-ci.org/gordonwritescode/coalescence.svg)](https://travis-ci.org/gordonwritescode/coalescence)
 
 ## Getting Started
 
