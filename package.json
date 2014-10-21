@@ -1,0 +1,36 @@
+{
+  "name": "coalesce",
+  "version": "0.0.0",
+  "description": "express-like framework for p2p applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gordonwritescode/coalesce.git"
+  },
+  "keywords": [
+    "p2p",
+    "decentralized",
+    "peer",
+    "distributed"
+  ],
+  "author": "Gordon Hall <gordon@gordonwritescode.com>",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/gordonwritescode/coalesce/issues"
+  },
+  "homepage": "https://github.com/gordonwritescode/coalesce",
+  "devDependencies": {
+    "mocha": "^1.21.5",
+    "should": "^4.1.0",
+    "sinon": "^1.10.3"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "hat": "0.0.3",
+    "merge": "^1.2.0",
+    "through": "^2.3.6"
+  }
+}
