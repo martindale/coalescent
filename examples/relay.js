@@ -17,7 +17,7 @@ async.waterfall(
     app3.listen.bind(app3, 1339),
     // connect to app2 from app1
     function(done) {
-      input = app1.connect(1338, done);
+      app1.connect(1338, done);
     },
     // connect to app3 from app2
     function(done) {
@@ -27,7 +27,7 @@ async.waterfall(
   function() {
     // app3 receives relayed messages from app1
     setInterval(function() {
-      input.write('beep boop\n');
+      app1.write('beep boop\n');
     }, 500);
   }
 );
