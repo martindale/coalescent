@@ -1,28 +1,28 @@
-Coalescence
-===========
+Coalescent
+==========
 
 An [Express](http://expressjs.com/)-like framework for rapidly building
 [P2P](http://en.wikipedia.org/wiki/Peer-to-peer) applications with Node.js.
 
-[![Build Status](https://travis-ci.org/gordonwritescode/coalescence.svg)](https://travis-ci.org/gordonwritescode/coalescence)
+[![Build Status](https://travis-ci.org/gordonwritescode/coalescent.svg)](https://travis-ci.org/gordonwritescode/coalescent)
 
 ## Getting Started
 
-Install Coalescence using NPM:
+Install Coalescent using NPM:
 
 ```
-$ npm install coalescence
+$ npm install coalescent
 ```
 
 Build your P2P application:
 
 ```js
-var coalesce = require('coalescence');
-var app      = coalesce();
+var coalescent = require('coalescent');
+var app        = coalescent();
 
 // transform streams as middleware
-app.use(coalesce.courier()); // parse incoming messages
-app.use(coalesce.router()); // route parsed messages to handlers
+app.use(coalescent.courier()); // parse incoming messages
+app.use(coalescent.router()); // route parsed messages to handlers
 
 // handle errors
 app.on('error', function(err, socket) {
@@ -53,12 +53,12 @@ app.broadcast('beep', { sound: 'boop' });
 fs.createReadStream('not_copyright_infringing.mp4').pipe(app);
 ```
 
-You can use the `coalesce.router()` middleware to setup express-like message
+You can use the `coalescent.router()` middleware to setup express-like message
 handlers.
 
 ```js
 // call this after messageParser()
-app.use(coalesce.router());
+app.use(coalescent.router());
 
 // when we get a `ping` message, send 'pong'
 app.message('ping', function(socket) {
