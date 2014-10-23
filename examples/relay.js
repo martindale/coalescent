@@ -4,6 +4,8 @@ var app1     = coalesce();
 var app2     = coalesce();
 var app3     = coalesce();
 
+app2.use(coalesce.tattletale());
+
 // pipe output to console
 app3.pipe(process.stdout);
 
