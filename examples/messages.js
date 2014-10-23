@@ -1,5 +1,4 @@
 var net      = require('net');
-var es       = require('event-stream');
 var coalesce = require('..');
 var app      = coalesce();
 
