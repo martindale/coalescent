@@ -21,6 +21,7 @@ var coalescent = require('coalescent');
 var app        = coalescent();
 
 // transform streams as middleware
+app.use(coalescent.tattletale()); // relay received messages to other peers
 app.use(coalescent.courier()); // parse incoming messages
 app.use(coalescent.router()); // route parsed messages to handlers
 
@@ -55,11 +56,6 @@ fs.createReadStream('not_copyright_infringing.mp4').pipe(app);
 
 The `coalescent()` function takes an optional `options` argument to configure
 it's behavior. This should be an object with the following properties:
-
-### relayMessages
-
-Pipe input from inbound connections to outbound connections and vice-versa.
-Defaults to `true`.
 
 ### minPeers
 
@@ -110,6 +106,16 @@ Your middleware gets embellished with `this.socket`, which is the "current"
 ### Included Middleware
 
 Coalescent ships with 2 pieces of middleware for common use-cases.
+
+#### Tattletale
+
+The Tattletale middleware will automatically relay received messages to your
+other peers. This should provide a good start for implementing a Gossip protocol
+for network-wide data replication.
+
+```js
+app.use(coalescent.tattletale());
+```
 
 #### Courier
 
