@@ -57,11 +57,11 @@ You can use the `coalescent.router()` middleware to setup express-like message
 handlers.
 
 ```js
-// call this after messageParser()
+// call this after courier()
 app.use(coalescent.router());
 
 // when we get a `ping` message, send 'pong'
-app.message('ping', function(socket) {
+app.route('ping', function(socket) {
   // you can write() to the socket or use the send()
   // method provided by the courier middleware
   socket.send('pong', { timestamp: Date.now() });
