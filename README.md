@@ -29,11 +29,6 @@ app.on('error', function(err, socket) {
   console.log(err);
 });
 
-// configure app
-app.set('seeds', ['somehost:1337']);
-app.set('maxPeers', 12);
-app.set('relayMessages', true);
-
 app.listen(1337, function() {
   console.log('node accepting connections on port 1337');
 });
@@ -45,28 +40,43 @@ it. You will get whatever your peers write to you when reading from it.
 ```js
 // print incoming messages to console
 app.pipe(process.stdout);
+
 // broadcast message to peers
 app.write('beep boop\n');
+
 // using the courier middleware, we can use broadcast()
 app.broadcast('beep', { sound: 'boop' });
+
 // maybe even stream a file to all your peers
 fs.createReadStream('not_copyright_infringing.mp4').pipe(app);
 ```
 
-You can use the `coalescent.router()` middleware to setup express-like message
-handlers.
+## Options
 
-```js
-// call this after courier()
-app.use(coalescent.router());
+The `coalescent()` function takes an optional `options` argument to configure
+it's behavior. This should be an object with the following properties:
 
-// when we get a `ping` message, send 'pong'
-app.route('ping', function(socket) {
-  // you can write() to the socket or use the send()
-  // method provided by the courier middleware
-  socket.send('pong', { timestamp: Date.now() });
-});
-```
+### relayMessages
+
+Pipe input from inbound connections to outbound connections and vice-versa.
+Defaults to `true`.
+
+### minPeers
+
+The minimum number of seeds we should actively attempt to reach. Defaults to `3`.
+
+### maxPeers
+
+The maximum number of seeds we should attempt to reach. Defaults to `12`.
+
+### seeds
+
+An array of seeds to connect in the format `'host:port'`. Defaults to `[]`.
+
+### logger
+
+Any object that implements `info`, `error`, and `warn` methods. Defaults to
+`console`.
 
 ## Middleware and Plugins
 
@@ -96,6 +106,40 @@ app.use(through(function(data) {
 
 Your middleware gets embellished with `this.socket`, which is the "current"
 `net.Socket` instance.
+
+### Included Middleware
+
+Coalescent ships with 2 pieces of middleware for common use-cases.
+
+#### Courier
+
+The Courier middleware handles parsing incoming messages into objects that can
+be handled by your application as well as supplementing connected `Sockets` with
+a `send()` method and your application with a `broadcast()` method.
+
+Both `send()` and `broadcast()` take a `type` parameter as their first argument
+and a `data` parameter as the second.
+
+```js
+app.broadcast('ping', { time: Date.now() });
+```
+
+#### Router
+
+The Router middleware can be used to setup express-like message handlers based
+on the `type` parameter of messages parsed with Courier.
+
+```js
+// call this after courier()
+app.use(coalescent.router());
+
+// when we get a `ping` message, send 'pong'
+app.route('ping', function(socket, message) {
+  // you can write() to the socket or use the send()
+  // method provided by the courier middleware
+  socket.send('pong', { time: Date.now() });
+});
+```
 
 ### Methods for Implementors
 
