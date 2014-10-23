@@ -67,3 +67,49 @@ app.route('ping', function(socket) {
   socket.send('pong', { timestamp: Date.now() });
 });
 ```
+
+## Middleware and Plugins
+
+Coalescent aims to provide an un-opnionated framework, letting you build atop
+via middleware and plugins.
+
+Register your middleware using the `use()` method.
+
+```js
+app.use(middleware);
+```
+
+There is only one rule and that is the object you pass to `use()` must inherit
+from `stream.Transform`. Middleware works by creating a "chain of pipes". Input
+your app receives will get piped through the middleware stack before becoming
+your application output.
+
+This is very easy using a module like [through](https://www.npmjs.org/package/through).
+
+```js
+// replace "beep" with "boop"
+app.use(through(function(data) {
+  var transformed = data.split('beep').join('boop');
+  this.queue(transformed);
+}));
+```
+
+Your middleware gets embellished with `this.socket`, which is the "current"
+`net.Socket` instance.
+
+### Methods for Implementors
+
+There are three methods that your middleware can implement to affect the
+behavior of your application:
+
+#### _transform(data, encoding, done)
+
+The required method for `stream.Transform` instances.
+
+#### _init(app)
+
+Gets called with a reference to the application, once upon initial registration.
+
+#### _connect(socket)
+
+Gets called every time a new peer connects with that peer's `net.Socket`.
