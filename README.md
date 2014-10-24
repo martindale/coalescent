@@ -166,3 +166,23 @@ The required method for `stream.Transform` instances.
 
 Gets called every time a new peer connects with a reference to the application,
 and the new connected socket.
+
+## Application Plugins
+
+Implementing a `_plugin(app)` function that extends from your middleware
+**function**, will get called upon initial registration of your middleware.
+This lets you modify or embellish the `app` object.
+
+Example:
+
+```js
+module.exports = function middleware() {
+  var tform = new stream.Transform();
+  // ...
+  return tform;
+};
+
+module.exports._plugin = function(app) {
+  // do stuff with `app`
+};
+```
