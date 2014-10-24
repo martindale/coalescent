@@ -106,12 +106,12 @@ app.use(function(socket) {
 );
 ```
 
-Your middleware gets embellished with `this.socket`, which is the "current"
+Your middleware function gets called with `socket`, which is the "current"
 `net.Socket` instance.
 
 ### Included Middleware
 
-Coalescent ships with 2 pieces of middleware for common use-cases.
+Coalescent ships with three pieces of middleware for common use-cases.
 
 #### Tattletale
 
