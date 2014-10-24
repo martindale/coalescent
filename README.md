@@ -85,19 +85,25 @@ Register your middleware using the `use()` method.
 app.use(middleware);
 ```
 
-There is only one rule and that is the object you pass to `use()` must inherit
-from `stream.Transform`. Middleware works by creating a "chain of pipes". Input
-your app receives will get piped through the middleware stack before becoming
-your application output.
+There is only one rule and that is the object you pass to `use()` must be a that
+returns an object that inherits from `stream.Transform`.
+
+Middleware works by creating a "chain of pipes". Input your app receives will
+get piped through the middleware stack before becoming your application output.
 
 This is very easy using a module like [through](https://www.npmjs.org/package/through).
 
 ```js
 // replace "beep" with "boop"
-app.use(through(function(data) {
-  var transformed = data.split('beep').join('boop');
-  this.queue(transformed);
-}));
+app.use(function(socket) {
+  return through(function(data) {
+    var transformed = data.split('beep').join('boop');
+    // pass on to next middleware
+    this.queue(transformed);
+    // access the connected socket, too!
+    console.log('Recevide message from', socket.address());
+  });
+);
 ```
 
 Your middleware gets embellished with `this.socket`, which is the "current"
@@ -149,17 +155,14 @@ app.route('ping', function(socket, message) {
 
 ### Methods for Implementors
 
-There are three methods that your middleware can implement to affect the
+There are two methods that your middleware can implement to affect the
 behavior of your application:
 
 #### _transform(data, encoding, done)
 
 The required method for `stream.Transform` instances.
 
-#### _init(app)
+#### _init(app, socket)
 
-Gets called with a reference to the application, once upon initial registration.
-
-#### _connect(socket)
-
-Gets called every time a new peer connects with that peer's `net.Socket`.
+Gets called every time a new peer connects with a reference to the application,
+and the new connected socket.
