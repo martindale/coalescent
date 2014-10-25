@@ -129,18 +129,6 @@ describe('Application', function() {
 
   });
 
-  describe('#write', function() {
-
-    it('should write message to peers', function(done) {
-      app2.once('data', function(d) {
-        d.toString().should.equal('beep boop\n');
-        done();
-      });
-      app1.write('beep boop\n');
-    });
-
-  });
-
   describe('#_enterNetwork', function() {
 
     it('should open connections to supplied seeds', function(done) {
