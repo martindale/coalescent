@@ -9,9 +9,9 @@ function coalescent(opts) {
 };
 
 // expose middleware
-coalesce.courier    = courier;
-coalesce.router     = router;
-coalesce.tattletale = tattletale;
+coalescent.courier    = courier;
+coalescent.router     = router;
+coalescent.tattletale = tattletale;
 
 // expose module
 module.exports = coalescent;
