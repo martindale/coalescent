@@ -4,7 +4,7 @@ var router      = require('./lib/middleware/router');
 var tattletale  = require('./lib/middleware/tattletale');
 
 // expose app constructor
-function coalesce(opts) {
+function coalescent(opts) {
   return new Application(opts);
 };
 
@@ -14,4 +14,4 @@ coalesce.router     = router;
 coalesce.tattletale = tattletale;
 
 // expose module
-module.exports = coalesce;
+module.exports = coalescent;
