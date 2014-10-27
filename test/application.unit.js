@@ -194,4 +194,43 @@ describe('Application', function() {
 
   });
 
+  describe('@_events', function() {
+
+    var peer1 = new net.Socket();
+    var peer2 = null;
+
+    it('should emit `peerConnected` on inbound peer added', function(done) {
+      app1.once('peerConnected', function(peer) {
+        peer.should.instanceOf(net.Socket);
+        done();
+      });
+      peer1.connect(app1.server.address().port);
+    });
+
+    it('should emit `peerConnected` on outbound peer added', function(done) {
+      app1.once('peerConnected', function(peer) {
+        peer.should.instanceOf(net.Socket);
+        done();
+      });
+      peer2 = app1.connect(app2.server.address().port);
+    });
+
+    it('should emit `peerDisconnected` on inbound peer removed', function(done) {
+      app1.once('peerDisconnected', function(peer) {
+        peer.should.instanceOf(net.Socket);
+        done();
+      });
+      peer1.end();
+    });
+
+    it('should emit `peerDisconnected` on outbound peer removed', function(done) {
+      app1.once('peerDisconnected', function(peer) {
+        peer.should.instanceOf(net.Socket);
+        done();
+      });
+      peer2.end();
+    });
+
+  });
+
 });
