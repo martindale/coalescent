@@ -74,6 +74,22 @@ An array of seeds to connect in the format `'host:port'`. Defaults to `[]`.
 Any object that implements `info`, `error`, and `warn` methods. Defaults to
 `console`.
 
+## Events
+
+### peerConnected
+
+Emitted when a new peer (either inbound or outbound) is connected. Passes peer
+socket object to handler.
+
+### peerDisconnected
+
+Emitted when an existing peer (either inbound or outbound) is disconnected.
+Passes peer socket object to handler.
+
+### error
+
+Emitted when an error occurs. Passes the error object to handler.
+
 ## Middleware and Plugins
 
 Coalescent aims to provide an un-opnionated framework, letting you build atop
@@ -85,8 +101,8 @@ Register your middleware using the `use()` method.
 app.use(middleware);
 ```
 
-There is only one rule and that is the object you pass to `use()` must be a that
-returns an object that inherits from `stream.Transform`.
+There is only one rule and that is the object you pass to `use()` must be a
+function that returns an object that inherits from `stream.Transform`.
 
 Middleware works by creating a "chain of pipes". Input your app receives will
 get piped through the middleware stack before becoming your application output.
@@ -101,7 +117,7 @@ app.use(function(socket) {
     // pass on to next middleware
     this.queue(transformed);
     // access the connected socket, too!
-    console.log('Recevide message from', socket.address());
+    console.log('Received message from', socket.address());
   });
 );
 ```
