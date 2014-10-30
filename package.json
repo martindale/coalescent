@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gordonwritescode/coalesce.git"
+    "url": "https://github.com/gordonwritescode/coalescent.git"
   },
   "keywords": [
     "p2p",
@@ -19,9 +19,9 @@
   "author": "Gordon Hall <gordon@gordonwritescode.com>",
   "license": "GPLv3",
   "bugs": {
-    "url": "https://github.com/gordonwritescode/coalesce/issues"
+    "url": "https://github.com/gordonwritescode/coalescent/issues"
   },
-  "homepage": "https://github.com/gordonwritescode/coalesce",
+  "homepage": "https://github.com/gordonwritescode/coalescent",
   "devDependencies": {
     "cli-color": "^0.3.2",
     "commander": "^2.5.0",
