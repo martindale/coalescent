@@ -11,7 +11,7 @@ An [Express](http://expressjs.com/)-like framework for rapidly building
 Install Coalescent using NPM:
 
 ```
-$ npm install coalescent
+npm install coalescent
 ```
 
 Build your P2P application:
@@ -55,7 +55,7 @@ fs.createReadStream('not_copyright_infringing.mp4').pipe(app);
 ## Options
 
 The `coalescent()` function takes an optional `options` argument to configure
-it's behavior. This should be an object with the following properties:
+its behavior. This should be an object with the following properties:
 
 ### minPeers
 
@@ -92,7 +92,7 @@ Emitted when an error occurs. Passes the error object to handler.
 
 ## Middleware and Plugins
 
-Coalescent aims to provide an un-opnionated framework, letting you build atop
+Coalescent aims to provide an un-opinionated framework, letting you build atop
 via middleware and plugins.
 
 Register your middleware using the `use()` method.
