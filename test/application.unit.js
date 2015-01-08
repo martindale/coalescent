@@ -111,9 +111,9 @@ describe('Application', function() {
 
   describe('#peers', function() {
 
-    it('should return an array of all peers', function(done) {
+    it('should return an deduplicated array of peers', function(done) {
       var peers = app1.peers();
-      peers.should.have.lengthOf(2);
+      peers.should.have.lengthOf(1);
       done();
     });
 
