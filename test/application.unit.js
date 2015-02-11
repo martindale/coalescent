@@ -229,4 +229,45 @@ describe('Application', function() {
 
   });
 
+  describe('server#destroy', function () {
+    var app;
+
+    beforeEach(function () {
+      app = coal({
+        logger: stublog,
+        seeds: ['127.0.0.1:12321', '127.0.0.1:23432']
+      });
+    });
+
+    var peer1 = coal({ logger: stublog });
+    var peer2 = coal({ logger: stublog });
+    peer1.listen(12321);
+    peer2.listen(23432);
+
+    it('should destroy the server', function (done) {
+      app.listen(34543, function () {
+        app.peers().length.should.equal(2);
+
+        // give coalescent time to process sockets
+        setTimeout(function () {
+          app.server.destroy(function () {
+              try {
+                app.server.destroy();
+              } catch (e) {
+                e.message.should.equal('Not running');
+                done();
+              }
+          });
+        }, 10);
+      });
+    });
+
+    it('should have freed the address binding, once destroyed', function (done) {
+      app.listen(34543, function () {
+        app.peers().length.should.equal(2);
+        done();
+      });
+    });
+  });
+
 });
