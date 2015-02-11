@@ -69,6 +69,64 @@ describe('Integration', function() {
 
   });
 
+  describe('Smart Relay', function () {
+    var app1, app2, app3;
+    var port1 = 3455;
+    var port2 = 3555;
+    var port3 = 3655;
+
+    beforeEach(function (done) {
+      var bCoal = coal.bind(coal, { logger: stublog });
+      app1 = bCoal();
+      app2 = bCoal();
+      app3 = bCoal();
+
+      app1.use(coal.smartrelay());
+      app2.use(coal.smartrelay());
+      app3.use(coal.smartrelay());
+
+      async.waterfall([
+        app1.listen.bind(app1, ++port1),
+        app2.listen.bind(app2, ++port2),
+        app3.listen.bind(app3, ++port3),
+        app1.connect.bind(app1, port2),
+        app2.connect.bind(app2, port3),
+        app3.connect.bind(app3, port1)
+      ], done);
+    });
+
+    it('should relay messages to peers', function (done) {
+      app3.once('data', function (data) {
+        data.toString().should.equal('beep boop\n');
+        done();
+      });
+      app1.write('beep boop\n');
+    });
+
+    it('should not relay duplicate messages', function (done) {
+      var timesReceived = 0;
+      var calledDone;
+      app1.on('data', function (data) {
+        data.toString().should.equal('beep boop\n');
+        timesReceived++;
+
+        setTimeout(function () {
+          // app1 should receive the message 3 times
+          // this means each node tried to relay the message and then stopped
+          // when the duplicate first was received, meaning each node processed
+          // the message only once itself
+          timesReceived.should.equal(3);
+
+          if (!calledDone) {
+            calledDone = true;
+            done();
+          }
+        }, 10); // allow time to see if nodes are oversharing
+      });
+      app3.write('beep boop\n');
+    });
+  });
+
   describe('Routing', function() {
 
     var app = coal({ logger: stublog });
