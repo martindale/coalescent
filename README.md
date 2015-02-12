@@ -139,6 +139,23 @@ for network-wide data replication.
 app.use(coalescent.tattletale());
 ```
 
+#### Smart Relay
+
+Like Tattletale, Smart Relay will automatically relay received message to your
+other peers. However, Smart Relay will hash all incoming messages as well, and
+check this hash against previous incoming messages to see if it has already been
+relayed by this node. If this node has already relayed the message, it will
+ignore it.
+
+This should make redundant or mesh-like networks possible without data
+duplication.
+
+> NB: This middleware should not be used in conjunction with Tattletale.
+
+```js
+app.use(coalescent.smartrelay());
+```
+
 #### Courier
 
 The Courier middleware handles parsing incoming messages into objects that can
