@@ -229,7 +229,7 @@ describe('Application', function() {
 
   });
 
-  describe('server#destroy', function () {
+  describe('#destroy', function () {
     var app;
 
     beforeEach(function () {
@@ -241,6 +241,7 @@ describe('Application', function() {
 
     var peer1 = coal({ logger: stublog });
     var peer2 = coal({ logger: stublog });
+
     peer1.listen(12321);
     peer2.listen(23432);
 
@@ -248,25 +249,18 @@ describe('Application', function() {
       app.listen(34543, function () {
         app.peers().length.should.equal(2);
 
-        // give coalescent time to process sockets
-        setTimeout(function () {
-          app.server.destroy(function () {
-              try {
-                app.server.destroy();
-              } catch (e) {
-                e.message.should.equal('Not running');
-                done();
-              }
+        setTimeout(function() {
+          app.destroy(function(err) {
+            should.not.exist(err);
+            app.peers().length.should.equal(0);
+            done();
           });
         }, 10);
       });
     });
 
     it('should have freed the address binding, once destroyed', function (done) {
-      app.listen(34543, function () {
-        app.peers().length.should.equal(2);
-        done();
-      });
+      app.listen(34543, done);
     });
   });
 

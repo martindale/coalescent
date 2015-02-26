@@ -14,7 +14,7 @@ contributors will happily be added as project collaborators, giving them push
 access to this repository.
 
 Style-wise, follow
-[Felix's Style Guide](https://github.com/felixge/node-style-guide) and line up
-assignments like you see in the source.
+[Felix's Style Guide](https://github.com/felixge/node-style-guide) and use the
+JSDoc annotations like you see in the source.
 
 Cheers!
