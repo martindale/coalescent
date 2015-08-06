@@ -26,6 +26,7 @@
     "cli-color": "^0.3.2",
     "commander": "^2.5.0",
     "mocha": "^1.21.5",
+    "net-browserify": "^0.1.7",
     "read": "^1.0.5",
     "should": "^4.1.0",
     "sinon": "^1.10.3"
@@ -37,5 +38,8 @@
     "konduit": "^0.0.4",
     "merge": "^1.2.0",
     "through": "^2.3.6"
+  },
+  "browser": {
+    "net": "net-browserify"
   }
 }
