@@ -1,11 +1,13 @@
 /*
-** An Obligatory Chat App
+* P2P Chat Example
 */
 
-var program    = require('commander');
-var read       = require('read');
-var rl         = require('readline');
-var color      = require('cli-color');
+'use strict';
+
+var program = require('commander');
+var read = require('read');
+var rl = require('readline');
+var color = require('cli-color');
 var coalescent = require('..');
 
 program
