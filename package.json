@@ -1,6 +1,6 @@
 {
   "name": "coalescent",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "express-like framework for p2p applications",
   "main": "index.js",
   "scripts": {
