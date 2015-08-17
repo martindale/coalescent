@@ -17,8 +17,8 @@ npm install coalescent
 Build your P2P application:
 
 ```js
-var coalescent = require('coalescent');
-var app        = coalescent();
+var coal = require('coalescent');
+var app = coalescent();
 
 // transform streams as middleware
 app.use(coalescent.tattletale()); // relay received messages to other peers
@@ -30,6 +30,7 @@ app.on('error', function(err, socket) {
   console.log(err);
 });
 
+// fire up the server
 app.listen(1337, function() {
   console.log('node accepting connections on port 1337');
 });
