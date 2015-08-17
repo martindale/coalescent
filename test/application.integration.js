@@ -1,8 +1,10 @@
+'use strict';
+
 var should = require('should');
-var sinon  = require('sinon');
-var coal   = require('..');
-var net    = require('net');
-var async  = require('async');
+var sinon = require('sinon');
+var coal = require('..');
+var net = require('net');
+var async = require('async');
 
 var stublog = {
   info: sinon.stub(), warn: sinon.stub(), error: sinon.stub()
@@ -204,14 +206,22 @@ describe('Integration', function() {
     it('should broadcast the message to all peers', function(done) {
       var recd = 0;
 
-      app1.once('data', function(d) { if (cond(d) && ++recd === 2) done() });
-      app3.once('data', function(d) { if (cond(d) && ++recd === 2) done() });
+      app1.once('data', function(d) {
+        if (cond(d) && ++recd === 2) {
+          done();
+        }
+      });
+      app3.once('data', function(d) {
+        if (cond(d) && ++recd === 2) {
+          done();
+        }
+      });
 
       function cond(data) {
         data.type.should.equal('ping');
         data.body.message.should.equal('Greetings from app2!');
         return true;
-      };
+      }
 
       app2.broadcast('ping', { message: 'Greetings from app2!' });
     });

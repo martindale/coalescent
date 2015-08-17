@@ -1,8 +1,10 @@
-var should  = require('should');
-var sinon   = require('sinon');
-var coal    = require('..');
-var net     = require('net');
-var stream  = require('stream');
+'use strict';
+
+var should = require('should');
+var sinon = require('sinon');
+var coal = require('..');
+var net = require('net');
+var stream = require('stream');
 var through = require('through');
 
 var stublog = {
@@ -121,7 +123,9 @@ describe('Application', function() {
       var total  = app1.peers().length;
       var called = 0;
       app1.peers(function(p) {
-        if (p instanceof net.Socket) called++;
+        if (p instanceof net.Socket) {
+          called++;
+        }
       });
       should(total).equal(called);
       done();
