@@ -1,10 +1,10 @@
 {
   "name": "coalescent",
-  "version": "0.6.1",
+  "version": "0.6.2-dev",
   "description": "express-like framework for p2p applications",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*"
+    "test": "mocha test/* --exit"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "distributed"
   ],
   "author": "Gordon Hall <gordon@gordonwritescode.com>",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/gordonwritescode/coalescent/issues"
   },
@@ -25,7 +25,7 @@
   "devDependencies": {
     "cli-color": "^0.3.2",
     "commander": "^2.5.0",
-    "mocha": "^1.21.5",
+    "mocha": "^5.2.0",
     "read": "^1.0.5",
     "should": "^4.1.0",
     "sinon": "^1.10.3"
